@@ -1,0 +1,7 @@
+name: mob_telegram
+display_name: OpeyemiAgent Telegram
+version: 1.0.0
+description: Send and receive Telegram messages via Bot API (ports MobileClaw telegram skill).
+author: OpeyemiAgent
+license: MIT
+entry: helpers/telegram.py

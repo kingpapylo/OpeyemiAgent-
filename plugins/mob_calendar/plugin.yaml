@@ -1,0 +1,7 @@
+name: mob_calendar
+display_name: OpeyemiAgent Calendar
+version: 1.0.0
+description: Read and create calendar events (ports MobileClaw calendar skill).
+author: OpeyemiAgent
+license: MIT
+entry: helpers/calendar.py

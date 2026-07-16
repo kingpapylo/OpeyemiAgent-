@@ -1,0 +1,7 @@
+name: mob_homeassistant
+display_name: OpeyemiAgent Home Assistant
+version: 1.0.0
+description: Control smart home devices via Home Assistant REST API (ports MobileClaw smart-home skill).
+author: OpeyemiAgent
+license: MIT
+entry: helpers/homeassistant.py

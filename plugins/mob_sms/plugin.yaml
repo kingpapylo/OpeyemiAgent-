@@ -1,0 +1,7 @@
+name: mob_sms
+display_name: OpeyemiAgent SMS
+version: 1.0.0
+description: Send and search SMS via host-bridge (ports MobileClaw SMS skill).
+author: OpeyemiAgent
+license: MIT
+entry: helpers/sms.py

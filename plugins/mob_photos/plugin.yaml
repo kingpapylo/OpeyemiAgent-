@@ -1,0 +1,7 @@
+name: mob_photos
+display_name: OpeyemiAgent Photos
+version: 1.0.0
+description: Find, view, and share photos via host-bridge MediaStore (ports MobileClaw photos skill).
+author: OpeyemiAgent
+license: MIT
+entry: helpers/photos.py

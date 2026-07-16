@@ -1,0 +1,7 @@
+name: mob_navigation
+display_name: OpeyemiAgent Navigation
+version: 1.0.0
+description: Directions, place search, and map viewing (ports MobileClaw navigation skill).
+author: OpeyemiAgent
+license: MIT
+entry: helpers/navigation.py

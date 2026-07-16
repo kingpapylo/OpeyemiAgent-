@@ -1,0 +1,7 @@
+name: mob_email
+display_name: OpeyemiAgent Email
+version: 1.0.0
+description: Read, search, compose and reply to email via Gmail API (ports MobileClaw email skill).
+author: OpeyemiAgent
+license: MIT
+entry: helpers/email.py

@@ -1,0 +1,7 @@
+name: mob_notion
+display_name: OpeyemiAgent Notion
+version: 1.0.0
+description: Search, read, and create Notion pages/databases (ports MobileClaw notion skill).
+author: OpeyemiAgent
+license: MIT
+entry: helpers/notion.py

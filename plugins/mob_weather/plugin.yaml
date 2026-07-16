@@ -1,0 +1,7 @@
+name: mob_weather
+display_name: OpeyemiAgent Weather
+version: 1.0.0
+description: Current weather and forecasts via wttr.in (ports MobileClaw weather skill).
+author: OpeyemiAgent
+license: MIT
+entry: helpers/weather.py

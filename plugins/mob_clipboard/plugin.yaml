@@ -1,0 +1,7 @@
+name: mob_clipboard
+display_name: OpeyemiAgent Clipboard
+version: 1.0.0
+description: Read and write device clipboard via host-bridge (ports MobileClaw clipboard skill).
+author: OpeyemiAgent
+license: MIT
+entry: helpers/clipboard.py
