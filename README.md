@@ -39,6 +39,6 @@ curl -fsSL https://bash.agent-zero.ai | bash
 ```
 
 ## License
-OpeyemiAgent is a rebrand of [Agent Zero](https://github.com/agent0ai/agent-zero)
-(MIT License, Copyright (c) 2025 Agent Zero, s.r.o.).
+OpeyemiAgent is a rebrand of [OpeyemiAgent](https://github.com/agent0ai/agent-zero)
+(MIT License, Copyright (c) 2025 OpeyemiAgent, s.r.o.).
 The original MIT LICENSE file is retained in this repository.
