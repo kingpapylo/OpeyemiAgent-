@@ -22,12 +22,16 @@ opeyemiagent health
 
 See `Skill.md` for the skill definition and `tools.md` for the tool reference.
 
+### Smart ask behavior
+
+- `opeyemiagent ask "..."` routes free text to the best mode
+- Low-confidence prompts ask you to choose a mode
+- Close matches can return a mixed response
+
 ```bash
 opeyemiagent ask "backup my downloads folder"
 opeyemiagent ask "termux battery optimization"
 opeyemiagent ask "build a node cli logger"
-- Low-confidence prompts ask you to choose a mode
-- Close matches can return a mixed response
 opeyemiagent automation "backup my downloads folder"
 opeyemiagent research "termux battery optimization"
 opeyemiagent coding "build a node cli logger"
