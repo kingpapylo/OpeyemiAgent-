@@ -17,6 +17,7 @@ Commands:
   coding       Track a coding task
   memory       Show memory stats
   teach        Add a teaching note
+  teach:auto   Auto-pick the teaching bucket
   health       Run a boot/health scan
   status       Show the current session status
   tools        Show the tool catalog
@@ -27,6 +28,7 @@ Examples:
   opeyemiagent research "termux battery optimization"
   opeyemiagent coding "build a node cli logger"
   opeyemiagent teach rules "Always ask before shell commands"
+  opeyemiagent teach auto "When requests mention install steps, use workflows"
   opeyemiagent tools
 `);
 }
@@ -52,8 +54,9 @@ function runTask(kind, input) {
     return;
   }
   agent.startSession(input);
-  agent.addMemory('episodic', `${kind}: ${input}`);
   const response = agent.responseFor(kind, input);
+  const memoryBucket = kind === 'memory' ? agent.classifyMemory(input) : 'episodic';
+  agent.addMemory(memoryBucket, `${kind}: ${input}`);
   console.log(response);
   agent.finishSession(input, response);
 }
@@ -63,12 +66,13 @@ function runTeach(kind, input) {
     console.log('Provide a teaching note.');
     return;
   }
-  if (!agent.state.teachings[kind]) {
-    console.log(`Unknown teaching bucket: ${kind}`);
+  const bucket = kind === 'auto' ? agent.classifyTeachingBucket(input) : kind;
+  if (!agent.state.teachings[bucket]) {
+    console.log(`Unknown teaching bucket: ${bucket}`);
     return;
   }
-  agent.addTeaching(kind, input);
-  console.log(`Saved teaching to ${kind}: ${input}`);
+  agent.addTeaching(bucket, input);
+  console.log(`Saved teaching to ${bucket}: ${input}`);
 }
 
 switch (command) {
