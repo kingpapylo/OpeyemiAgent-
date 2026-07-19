@@ -77,13 +77,13 @@ function runTask(kind, input) {
 }
 
 function runAsk(input) {
-  const mode = agent.routeMode(input);
-  if (mode === 'help') {
+  const routed = agent.routeMode(input);
+  if (routed.mode === 'help') {
     printHelp();
     return;
   }
-  console.log(`Auto-routed to: ${mode}`);
-  runTask(mode, input);
+  console.log(`Auto-routed to: ${routed.mode} (${routed.confidence}% confidence)`);
+  runTask(routed.mode, input);
 }
 
 function runTeach(kind, input) {
