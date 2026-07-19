@@ -1,0 +1,18 @@
+{
+  "name": "opeyemiagent",
+  "version": "1.0.0",
+  "description": "OpeOpeNationAiAgent v3 - a Node.js Termux agent with memory, sessions, teaching, and task routing.",
+  "private": false,
+  "type": "module",
+  "bin": {
+    "opeyemiagent": "./bin/opeyemiagent.js"
+  },
+  "scripts": {
+    "start": "node ./bin/opeyemiagent.js",
+    "help": "node ./bin/opeyemiagent.js --help",
+    "setup": "bash ./setup.sh"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
