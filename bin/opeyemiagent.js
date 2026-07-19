@@ -2,7 +2,8 @@
 import process from 'node:process';
 import { createAgent } from '../lib/agent.js';
 
-const [, , command = 'help', ...args] = process.argv;
+const argv = process.argv.slice(2);
+const explicitCommand = argv[0] || 'help';
 const agent = createAgent();
 
 function printHelp() {
@@ -15,6 +16,7 @@ Commands:
   automation   Track an automation task
   research     Track a research task
   coding       Track a coding task
+  ask          Auto-route free text to the best mode
   memory       Show memory stats
   teach        Add a teaching note
   teach:auto   Auto-pick the teaching bucket
@@ -48,6 +50,19 @@ function printTools() {
   console.log(agent.docs.tools);
 }
 
+function normalizeInput(text) {
+  return String(text || '').trim();
+}
+
+function detectMode(text) {
+  const lower = normalizeInput(text).toLowerCase();
+  if (!lower) return 'help';
+  if (lower.includes('research') || lower.includes('find') || lower.includes('compare') || lower.includes('what is')) return 'research';
+  if (lower.includes('code') || lower.includes('bug') || lower.includes('repo') || lower.includes('build')) return 'coding';
+  if (lower.includes('install') || lower.includes('setup') || lower.includes('backup') || lower.includes('script') || lower.includes('automate')) return 'automation';
+  return 'automation';
+}
+
 function runTask(kind, input) {
   if (!input) {
     console.log(`Provide a ${kind} prompt.`);
@@ -59,6 +74,16 @@ function runTask(kind, input) {
   agent.addMemory(memoryBucket, `${kind}: ${input}`);
   console.log(response);
   agent.finishSession(input, response);
+}
+
+function runAsk(input) {
+  const mode = detectMode(input);
+  if (mode === 'help') {
+    printHelp();
+    return;
+  }
+  console.log(`Auto-routed to: ${mode}`);
+  runTask(mode, input);
 }
 
 function runTeach(kind, input) {
@@ -75,15 +100,18 @@ function runTeach(kind, input) {
   console.log(`Saved teaching to ${bucket}: ${input}`);
 }
 
-switch (command) {
+switch (explicitCommand) {
   case 'automation':
-    runTask('automation', args.join(' '));
+    runTask('automation', argv.slice(1).join(' '));
     break;
   case 'research':
-    runTask('research', args.join(' '));
+    runTask('research', argv.slice(1).join(' '));
     break;
   case 'coding':
-    runTask('coding', args.join(' '));
+    runTask('coding', argv.slice(1).join(' '));
+    break;
+  case 'ask':
+    runAsk(argv.slice(1).join(' '));
     break;
   case 'memory':
     console.log(`Episodic: ${agent.state.memory.episodic.length}`);
@@ -115,6 +143,10 @@ switch (command) {
     printHelp();
     break;
   default:
-    console.log(`Unknown command: ${command}`);
+    if (argv.length > 0) {
+      runAsk(argv.join(' '));
+      break;
+    }
+    console.log(`Unknown command: ${explicitCommand}`);
     printHelp();
 }
