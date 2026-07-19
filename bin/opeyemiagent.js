@@ -82,6 +82,20 @@ function runAsk(input) {
     printHelp();
     return;
   }
+  if (routed.confidence < 40) {
+    console.log(`I’m not sure which mode fits best (${routed.confidence}% confidence).`);
+    console.log('Do you want automation, research, or coding?');
+    return;
+  }
+  if (routed.mixed && routed.secondaryMode) {
+    console.log(`Auto-routed to a mixed response: ${routed.mode} + ${routed.secondaryMode} (${routed.confidence}% confidence)`);
+    const primary = agent.responseFor(routed.mode, input);
+    const secondary = agent.responseFor(routed.secondaryMode, input);
+    console.log(primary);
+    console.log('---');
+    console.log(secondary);
+    return;
+  }
   console.log(`Auto-routed to: ${routed.mode} (${routed.confidence}% confidence)`);
   runTask(routed.mode, input);
 }
