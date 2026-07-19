@@ -14,6 +14,10 @@ if ! command -v npm >/dev/null 2>&1; then
   exit 1
 fi
 
+if [ -d .git ]; then
+  git pull --rebase || true
+fi
+
 npm install
 npm link
 
