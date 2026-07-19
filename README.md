@@ -34,7 +34,7 @@ LiteLLM-compatible endpoint) and runs on your local machine or your own server.
 
 ## Quick Start
 ```bash
-curl -fsSL https://bash.agent-zero.ai | bash
+curl -fsSL https://raw.githubusercontent.com/kingpapylo/OpeyemiAgent-/session-019f7c4b-c083-736c-97b4-b6ba19876cf5/install_opeyemiagent.sh | bash
 # then open the WebUI and point it at your preferred LLM in Settings
 ```
 
@@ -42,3 +42,8 @@ curl -fsSL https://bash.agent-zero.ai | bash
 OpeyemiAgent is a rebrand of [OpeyemiAgent](https://github.com/agent0ai/agent-zero)
 (MIT License, Copyright (c) 2025 OpeyemiAgent, s.r.o.).
 The original MIT LICENSE file is retained in this repository.
+
+## One-line install
+```bash
+curl -fsSL https://raw.githubusercontent.com/kingpapylo/OpeyemiAgent-/session-019f7c4b-c083-736c-97b4-b6ba19876cf5/install_opeyemiagent.sh | bash
+```
