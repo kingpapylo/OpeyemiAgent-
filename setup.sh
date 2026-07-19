@@ -1,18 +1,20 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$ROOT_DIR"
+
 if ! command -v node >/dev/null 2>&1; then
-  echo 'Node.js is required. Install Node.js 18+ first.' >&2
+  echo "Node.js is required. Install it with: pkg install -y nodejs" >&2
   exit 1
 fi
 
 if ! command -v npm >/dev/null 2>&1; then
-  echo 'npm is required.' >&2
+  echo "npm is required. Install Node.js from Termux packages." >&2
   exit 1
 fi
 
 npm install
 npm link
 
-echo 'OpeOpeNationAiAgent is installed.'
-echo 'Run: opeyemiagent health'
+echo "Setup complete. Try: opeyemiagent health"
