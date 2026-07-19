@@ -19,6 +19,7 @@ Commands:
   teach        Add a teaching note
   health       Run a boot/health scan
   status       Show the current session status
+  tools        Show the tool catalog
   help         Show this help text
 
 Examples:
@@ -26,6 +27,7 @@ Examples:
   opeyemiagent research "termux battery optimization"
   opeyemiagent coding "build a node cli logger"
   opeyemiagent teach rules "Always ask before shell commands"
+  opeyemiagent tools
 `);
 }
 
@@ -36,6 +38,12 @@ function printStatus() {
   console.log(`Role: ${state.identity.role}`);
   console.log(`Last saved: ${state.healthState.lastSavedAt || 'never'}`);
   console.log(`Current session: ${state.sessions.current ? 'active' : 'none'}`);
+  console.log(`Skill loaded: ${agent.docs.skillPath}`);
+  console.log(`Tools loaded: ${agent.docs.toolsPath}`);
+}
+
+function printTools() {
+  console.log(agent.docs.tools);
 }
 
 function runTask(kind, input) {
@@ -93,6 +101,9 @@ switch (command) {
     break;
   case 'status':
     printStatus();
+    break;
+  case 'tools':
+    printTools();
     break;
   case 'help':
   case '--help':
