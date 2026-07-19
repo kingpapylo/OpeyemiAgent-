@@ -77,7 +77,7 @@ function runTask(kind, input) {
 }
 
 function runAsk(input) {
-  const mode = detectMode(input);
+  const mode = agent.routeMode(input);
   if (mode === 'help') {
     printHelp();
     return;
