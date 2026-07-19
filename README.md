@@ -52,13 +52,13 @@ State is stored in:
 ## Termux Install
 
 ```bash
-pkg update -y && pkg upgrade -y && pkg install -y git nodejs curl && cd ~/OpeyemiAgent- && bash setup.sh
+pkg update -y && pkg upgrade -y && pkg install -y git nodejs curl && git clone https://github.com/kingpapylo/OpeyemiAgent-.git ~/OpeyemiAgent- && cd ~/OpeyemiAgent- && bash ./setup.sh
 ```
 
 ### One-line install command
 
 ```bash
-pkg update -y && pkg upgrade -y && pkg install -y git nodejs curl && cd ~/OpeyemiAgent- && bash setup.sh && opeyemiagent health && opeyemiagent ask "build a node cli logger"
+pkg update -y && pkg upgrade -y && pkg install -y git nodejs curl && git clone https://github.com/kingpapylo/OpeyemiAgent-.git ~/OpeyemiAgent- && cd ~/OpeyemiAgent- && bash ./setup.sh && opeyemiagent health && opeyemiagent ask "build a node cli logger"
 ```
 
 ## License
