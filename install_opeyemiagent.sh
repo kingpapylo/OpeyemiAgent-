@@ -42,5 +42,16 @@ if [ -f rebrand.sh ]; then
   bash ./rebrand.sh || true
 fi
 
+if [ -f setup.sh ]; then
+  bash ./setup.sh
+else
+  echo "setup.sh is missing from the repository checkout." >&2
+  exit 1
+fi
+
+if command -v opeyemiagent >/dev/null 2>&1; then
+  opeyemiagent health || true
+fi
+
 echo "OpeyemiAgent installed in $(pwd)"
-echo "Next: review README.md and run the quick start steps for your environment."
+echo "Next: try: opeyemiagent ask \"build a node cli logger\""
