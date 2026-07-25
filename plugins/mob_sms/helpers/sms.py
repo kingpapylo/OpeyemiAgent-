@@ -4,6 +4,7 @@ Requires the AgentZero _a0_connector host-bridge CLI (`a0`) configured to
 reach the user's phone. Adjust the `a0 host ...` subcommands to match the
 connector's actual interface.
 """
+
 import subprocess
 import json
 
