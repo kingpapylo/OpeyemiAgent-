@@ -18,6 +18,17 @@ bash setup.sh
 opeyemiagent health
 ```
 
+## Browser Development
+
+Run the browser interface and persistent agent state with Docker Compose:
+
+```bash
+docker compose -f docker-compose.alloy.yaml up -d
+```
+
+Open `http://localhost:3000`. The Compose service uses host networking and does
+not publish additional Docker ports.
+
 ## Commands
 
 See `Skill.md` for the skill definition and `tools.md` for the tool reference.
