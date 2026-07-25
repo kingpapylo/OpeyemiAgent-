@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OpeOpeNation AI Agent</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: #f2f5f3;
+        background: #0c1210;
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; min-height: 100vh; background: #0c1210; }
+      button, textarea { font: inherit; }
+      .shell { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 32px 0 56px; }
+      header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 56px; }
+      .brand { display: flex; align-items: center; gap: 12px; font-weight: 750; letter-spacing: -0.02em; }
+      .mark { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid #3f5d4c; border-radius: 12px; color: #9be6b7; background: #15221b; }
+      .status { display: flex; align-items: center; gap: 8px; color: #a8b8af; font-size: 14px; }
+      .dot { width: 8px; height: 8px; border-radius: 50%; background: #72dc9a; box-shadow: 0 0 0 4px #173523; }
+      main { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 48px; align-items: start; }
+      .eyebrow { margin: 0 0 14px; color: #8fd8aa; font: 700 12px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0.14em; text-transform: uppercase; }
+      h1 { max-width: 730px; margin: 0; font-size: clamp(42px, 7vw, 76px); line-height: 0.98; letter-spacing: -0.055em; }
+      .intro { max-width: 650px; margin: 24px 0 36px; color: #a8b8af; font-size: 18px; line-height: 1.65; }
+      .composer { padding: 8px; border: 1px solid #2a3931; border-radius: 18px; background: #121a16; box-shadow: 0 24px 70px rgba(0, 0, 0, 0.25); }
+      textarea { display: block; width: 100%; min-height: 118px; resize: vertical; border: 0; outline: 0; padding: 16px; color: #f2f5f3; background: transparent; line-height: 1.55; }
+      textarea::placeholder { color: #687970; }
+      .actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px; }
+      .hint { color: #718178; font-size: 12px; }
+      button { cursor: pointer; border: 0; border-radius: 10px; padding: 11px 17px; color: #092014; background: #91e4af; font-weight: 750; }
+      button:hover { background: #a6edc0; }
+      button:disabled { cursor: wait; opacity: 0.65; }
+      .response { display: none; margin-top: 18px; padding: 22px; border-left: 2px solid #72dc9a; border-radius: 0 12px 12px 0; color: #dce6e0; background: #101713; white-space: pre-wrap; line-height: 1.65; }
+      .response.visible { display: block; }
+      .response-meta { margin-bottom: 10px; color: #8fd8aa; font: 700 11px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0.1em; text-transform: uppercase; }
+      aside { border-top: 1px solid #314139; padding-top: 22px; }
+      aside h2 { margin: 0 0 20px; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: #9aaba2; }
+      .metric { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid #1e2b24; color: #91a198; font-size: 14px; }
+      .metric strong { color: #edf3ef; font: 650 14px/1 ui-monospace, SFMono-Regular, Menlo, monospace; }
+      .modes { display: grid; gap: 10px; margin-top: 28px; }
+      .mode { padding: 14px; border: 1px solid #26352d; border-radius: 12px; }
+      .mode b { display: block; margin-bottom: 5px; font-size: 14px; }
+      .mode span { color: #7f9087; font-size: 12px; line-height: 1.45; }
+      @media (max-width: 760px) {
+        .shell { padding-top: 22px; }
+        header { margin-bottom: 40px; }
+        main { grid-template-columns: 1fr; gap: 40px; }
+        h1 { font-size: clamp(42px, 14vw, 62px); }
+        .intro { font-size: 16px; }
+        .hint { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <header>
+        <div class="brand"><span class="mark">OP</span><span>OpeOpeNation</span></div>
+        <div class="status"><span class="dot"></span><span id="runtime-status">Connecting</span></div>
+      </header>
+      <main>
+        <section>
+          <p class="eyebrow">The Operation Agent / v3</p>
+          <h1>Turn intent into action.</h1>
+          <p class="intro">Route an idea into automation, research, or coding guidance. Sessions and memory persist as you work.</p>
+          <form class="composer" id="ask-form">
+            <textarea id="prompt" required placeholder="What do you want to build, research, or automate?"></textarea>
+            <div class="actions">
+              <span class="hint">Press Ctrl + Enter to run</span>
+              <button id="submit" type="submit">Run request</button>
+            </div>
+          </form>
+          <div class="response" id="response" aria-live="polite"></div>
+        </section>
+        <aside>
+          <h2>Agent state</h2>
+          <div class="metric"><span>Sessions</span><strong id="sessions">0</strong></div>
+          <div class="metric"><span>Episodic memory</span><strong id="episodic">0</strong></div>
+          <div class="metric"><span>Semantic memory</span><strong id="semantic">0</strong></div>
+          <div class="metric"><span>Procedural memory</span><strong id="procedural">0</strong></div>
+          <div class="modes">
+            <div class="mode"><b>Automation</b><span>Safe command plans and repeatable workflows.</span></div>
+            <div class="mode"><b>Research</b><span>Source gathering, comparisons, and summaries.</span></div>
+            <div class="mode"><b>Coding</b><span>Small implementations with focused tests.</span></div>
+          </div>
+        </aside>
+      </main>
+    </div>
+    <script>
+      const form = document.querySelector('#ask-form');
+      const prompt = document.querySelector('#prompt');
+      const submit = document.querySelector('#submit');
+      const output = document.querySelector('#response');
+
+      function updateSummary(summary) {
+        document.querySelector('#sessions').textContent = summary.sessions;
+        document.querySelector('#episodic').textContent = summary.memory.episodic;
+        document.querySelector('#semantic').textContent = summary.memory.semantic;
+        document.querySelector('#procedural').textContent = summary.memory.procedural;
+      }
+
+      async function loadStatus() {
+        try {
+          const response = await fetch('/api/status');
+          if (!response.ok) throw new Error('Status unavailable');
+          updateSummary(await response.json());
+          document.querySelector('#runtime-status').textContent = 'Agent online';
+        } catch {
+          document.querySelector('#runtime-status').textContent = 'Agent unavailable';
+        }
+      }
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        submit.disabled = true;
+        submit.textContent = 'Working...';
+        output.className = 'response visible';
+        output.textContent = 'Routing request...';
+        try {
+          const response = await fetch('/api/ask', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ input: prompt.value }),
+          });
+          const result = await response.json();
+          if (!response.ok) throw new Error(result.error);
+          output.innerHTML = '';
+          const meta = document.createElement('div');
+          meta.className = 'response-meta';
+          meta.textContent = `${result.mode} / ${result.confidence}% route confidence`;
+          const text = document.createElement('div');
+          text.textContent = result.response;
+          output.append(meta, text);
+          updateSummary(result.summary);
+        } catch (error) {
+          output.textContent = error.message || 'The request failed.';
+        } finally {
+          submit.disabled = false;
+          submit.textContent = 'Run request';
+        }
+      });
+
+      prompt.addEventListener('keydown', (event) => {
+        if (event.ctrlKey && event.key === 'Enter') form.requestSubmit();
+      });
+
+      loadStatus();
+    </script>
+  </body>
+</html>

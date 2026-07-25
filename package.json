@@ -9,6 +9,7 @@
   },
   "scripts": {
     "start": "node ./bin/opeyemiagent.js",
+    "web": "node ./web/server.js",
     "help": "node ./bin/opeyemiagent.js --help",
     "setup": "bash ./setup.sh"
   },

@@ -1,0 +1,18 @@
+services:
+  web:
+    image: node:22-bookworm
+    working_dir: /workspace
+    network_mode: host
+    environment:
+      HOME: /root
+      HOST: 0.0.0.0
+      PORT: 3000
+      IS_ALLOY: ${IS_ALLOY:-false}
+    volumes:
+      - .:/workspace
+      - opeyemiagent-data:/root/.opeope_nation
+    command: npm run web
+    restart: unless-stopped
+
+volumes:
+  opeyemiagent-data:
